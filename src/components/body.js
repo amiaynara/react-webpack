@@ -43,7 +43,6 @@ class Body extends Component {
      */
     async _loadPosts() {
         const accessToken = localStorage.getItem('accessToken');
-        console.log('the token used is : ', accessToken);
         if (accessToken) {
             const res = await fetch("http://localhost:8000/api/v1/blog/posts/?type=premium", {
               headers: {
@@ -51,7 +50,6 @@ class Body extends Component {
               }
             });
             const blogsData = await res.json();
-            console.log(blogsData, ' is the user data recieved from django');
             this.setState({ posts: blogsData });
         }
     }
@@ -61,7 +59,6 @@ class Body extends Component {
      */
     async _loadUsers() {
         const accessToken = localStorage.getItem('accessToken');
-        console.log('the token used is : ', accessToken);
         if (accessToken) {
             const res = await fetch("http://localhost:8000/api/v1/users/user/", {
               headers: {
@@ -69,7 +66,6 @@ class Body extends Component {
               }
             });
             const userData = await res.json();
-            console.log(userData, ' is the user data recieved from django');
             this.setState({ users: userData });
         }
     }

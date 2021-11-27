@@ -20,7 +20,6 @@ class App extends Component {
               }
             });
             const userData = await res.json();
-            console.log(userData, ' is the user data recieved from django');
         }
 	}
 
@@ -33,6 +32,7 @@ class App extends Component {
     
     /**
      * Test the working of fetch request
+     * using a third party api (star wars api)
      */
     async testFetch() {
         const url = 'http://localhost:8000/';
@@ -41,8 +41,30 @@ class App extends Component {
         try {
             const res = await fetch(endpoint);
             const data = await res.json();	 
-            console.log(data, ' is the data received');
+            console.log(data, ' is the data received from swapi');
         } catch (error) { console.log('There was some error');}
+    }
+
+    /**
+     * Helper to test the api working using xhr
+     */
+    async testxhr() {
+      var url = "http://localhost:8000/o/token/";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("Authorization", "Basic WmV0MFd0VmFTYkJDWWdWWjlUempXRVlld0JDRkpnTVV6NHc1V2N2bjpNWnJWWWt5M3RHZWp5Nm04eWJTNVZTbkdJWWpWNTFZbUc4MEhxY2t0dk0zQk05dHV0R280c1NZNzloWmd1TU1kbG5UeGlYQ3ZmWUlRb09lbEZYWEl6aXJIVVRqZzFnUk4xb0NjbVFmRVRVNFBtSDVoQWRVS3M4VVlQYlFzWG9Vbg==");
+
+      xhr.onreadystatechange = function () {
+         if (xhr.readyState === 4) {
+            console.log(xhr.status, ' request made using xhr');
+            console.log(xhr.responseText,'request made using xhr');
+         }};
+
+      var data = "grant_type=password&username=admin&password=aminara";
+
+    xhr.send(data);
     }
   
     /**
@@ -52,9 +74,9 @@ class App extends Component {
 		try {
 			// Use user name and password to get the token
 			// POST request with username, password and client id and secret. 
-            //  curl -X POST -d "grant_type=password&username=user1&password=password" -u"koFeMjeAuKnIkas4FqJWAxPyUGKsvwzKmIRmEvnu:tP7Hjf8FkGs1uJ0GC7qDtXg8kW1MXd3Eo5kNFJsWDvMqBGnmnRauHtLFuEt9zMwnv3KPXYCKrb3egIlfVyBiRHQnNn5TjYaB04KPatB1TFKb3vBl1NXcHranuIcHUsvt" http://localhost:8000/o/token/
+            //  curl -X POST -d "grant_type=password&username=admin&password=aminara" -u"Zet0WtVaSbBCYgVZ9TzjWEYewBCFJgMUz4w5Wcvn:MZrVYky3tGejy6m8ybS5VSnGIYjV51YmG80HqcktvM3BM9tutGo4sSY79hZguMMdlnTxiXCvfYIQoOelFXXIzirHUTjg1gRN1oCcmQfETU4PmH5hAdUKs8UYPbQsXoUn" http://localhost:8000/o/token/
             //  Write the above request using fetch
-            const res = fetch("http://localhost:8000/o/token/", {
+            const res = await fetch("http://localhost:8000/o/token/", {
               body: "grant_type=password&username=admin&password=aminara",
               headers: {
                 Authorization: "Basic WmV0MFd0VmFTYkJDWWdWWjlUempXRVlld0JDRkpnTVV6NHc1V2N2bjpNWnJWWWt5M3RHZWp5Nm04eWJTNVZTbkdJWWpWNTFZbUc4MEhxY2t0dk0zQk05dHV0R280c1NZNzloWmd1TU1kbG5UeGlYQ3ZmWUlRb09lbEZYWEl6aXJIVVRqZzFnUk4xb0NjbVFmRVRVNFBtSDVoQWRVS3M4VVlQYlFzWG9Vbg==",
